@@ -1,16 +1,16 @@
 import React from 'react';
+import { BrowserRouter, Route } from 'react-router-dom';
+
+import Register from './container/Register/Register';
+import Home from './container/Home';
+
 
 function App() {
   return (
-    <div className="App">
-      <h1>
-        grind and struggle
-      </h1>
-      <p>
-        congrats this is the first step to making it out 
-        here :)
-      </p>
-    </div>
+    <BrowserRouter>
+      <Route path='/' exact component={Home} />
+      <Route path='/register' exact component={Register} />
+    </BrowserRouter>
   );
 }
 
