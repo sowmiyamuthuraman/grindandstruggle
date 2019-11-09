@@ -49,7 +49,6 @@ class Register extends Component {
       this.setState({
         error: ''
       });
-      console.log(this.state)
 
       this.props.registerUser(this.state, this.props.history); 
     }

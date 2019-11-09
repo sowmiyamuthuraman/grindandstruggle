@@ -1,3 +1,5 @@
+import config from '../../config/config';
+
 /**
  * register action to create a user in the database
  * 
@@ -8,6 +10,16 @@
 
 export const RegisterAction = (user, history) => {
   return (dispatch, getState) => {
-    console.log('attempting to register', user, history);
+    fetch(config.BACKEND_URL + '/register', {
+      headers: { 'Content-Type': 'application/json' },
+      method: 'POST',
+      body: JSON.stringify(user)
+    })
+    .then((res) => {
+      history.push('/login');
+      dispatch({ type: 'REGISTER_SUCCESS' });
+    })
+    .catch(err => dispatch({ type: 'REGISTER_ERROR', err }));
+
   };
 };
