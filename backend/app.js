@@ -1,13 +1,24 @@
 const express = require('express');
 const app = express();
+const cors = require('cors');
+
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
 const users = require('./controllers/users');
-const config = require('./config/node-config');
+const config = require('./config/config');
 
-mongoose.connect(config.mongodbUrl, {  useCreateIndex: true, useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(config.MONGO_DB_URL, {  useCreateIndex: true, useNewUrlParser: true, useUnifiedTopology: true });
 
+
+app.use(cors(
+  {
+    origin: config.FRONTEND_URL,
+    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+  }
+))
+
+// parse application/json (fetch)
 app.use(bodyParser.json());
 
 app.post('/register', users.registerUser);

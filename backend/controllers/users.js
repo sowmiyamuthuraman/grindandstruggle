@@ -30,17 +30,20 @@ exports.registerUser = (req, res, next) => {
         userData.password = req.body.password;
     }
     else {
-        return res.status(400).send('Invalid user password');
+      return res.status(400).send('Invalid user password');
     }
+
+    // create the user in the database
+
     let newUser = new User(userData);
     newUser.save()
-        .then(user => {
-            return res.sendStatus(200);
-        })
-        .catch(err => {
-            if (err.code === 11000) {
-                return res.status(400).send('User email already registered');
-            }
-            return next(err);
-        });
+    .then(user => {
+        return res.sendStatus(200);
+    })
+    .catch(err => {
+        if (err.code === 11000) {
+            return res.status(400).send('User email already registered');
+        }
+        return next(err);
+    });
 };
