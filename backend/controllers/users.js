@@ -1,6 +1,8 @@
 const User = require('../models/schemas/user');
+const bcrypt = require('bcrypt');
 
 exports.registerUser = (req, res, next) => {
+    const saltRounds =10;
     let userData = {};
     // validate username
     if (req.body.username && typeof req.body.username === 'string') {
@@ -27,7 +29,7 @@ exports.registerUser = (req, res, next) => {
     }
     // validate password
     if (req.body.password && typeof req.body.password === 'string') {
-        userData.password = req.body.password;
+        userData.password = bcrypt.hashSync(req.body.password, saltRounds);
     }
     else {
       return res.status(400).send('Invalid user password');
